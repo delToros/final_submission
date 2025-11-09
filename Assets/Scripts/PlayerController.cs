@@ -11,7 +11,7 @@ public class PlayerController : BasicCharacter // INHERITANCE
 
     // For jumping
     private Rigidbody rb;
-    public float jumpForce = 5;
+    public float jumpForce = 8;
     public bool isOnGround = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
