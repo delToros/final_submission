@@ -9,6 +9,11 @@ public class PlayerController : BasicCharacter // INHERITANCE
     public float turnSpeed;
     private Animator animator;
 
+    // For jumping
+    private Rigidbody rb;
+    public float jumpForce = 5;
+    public bool isOnGround = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -17,6 +22,7 @@ public class PlayerController : BasicCharacter // INHERITANCE
         turnSpeed = 100;
 
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
     }
 
@@ -34,7 +40,6 @@ public class PlayerController : BasicCharacter // INHERITANCE
         // 2. Calculate the magnitude (length) of the movement vector
         // This value will be 0 when idle and 1 (or greater) when moving at full speed.
        float currentSpeed = movementVector.magnitude;
-       Debug.Log("Calculated Speed: " + currentSpeed);
 
         // 3. Set the Animator parameter
         animator.SetFloat("f_speed", currentSpeed);
@@ -48,5 +53,22 @@ public class PlayerController : BasicCharacter // INHERITANCE
         transform.Translate(movement);
 
         transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
+            animator.SetBool("isOnGround", false);
+            animator.SetTrigger("Jump_trig");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("floor"))
+        {
+            isOnGround = true;
+            animator.SetBool("isOnGround", true);
+        }
     }
 }

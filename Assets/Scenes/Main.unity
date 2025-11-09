@@ -167,7 +167,9 @@ MonoBehaviour:
   speed: 0
   forwardInput: 0
   horizontalInput: 0
-  turnSpeed: 10
+  turnSpeed: 0
+  jumpForce: 10
+  isOnGround: 1
 --- !u!65 &2228572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1210,7 +1212,7 @@ GameObject:
   - component: {fileID: 289609277}
   m_Layer: 0
   m_Name: FloorCollider
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8711,7 +8713,7 @@ GameObject:
   - component: {fileID: 1959232695}
   m_Layer: 0
   m_Name: floor
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
