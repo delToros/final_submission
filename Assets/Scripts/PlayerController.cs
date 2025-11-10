@@ -30,6 +30,7 @@ public class PlayerController : BasicCharacter // INHERITANCE
     {
         forwardInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
+
         Moving();
 
         // Setup f_speed parameter for animation
@@ -43,6 +44,9 @@ public class PlayerController : BasicCharacter // INHERITANCE
 
         // 3. Set the Animator parameter
         animator.SetFloat("f_speed", currentSpeed);
+
+
+
     }
 
     // POLYMORPHISM
@@ -57,7 +61,10 @@ public class PlayerController : BasicCharacter // INHERITANCE
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
+            //isOnGround = false;
+
+
+
             animator.SetBool("isOnGround", false);
             animator.SetTrigger("Jump_trig");
         }
