@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainUi : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class MainUi : MonoBehaviour
         Application.Quit();
 #endif
         Debug.Log("Exit Button Clicked!");
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
     }
 
 
