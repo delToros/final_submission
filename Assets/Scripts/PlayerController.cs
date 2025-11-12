@@ -52,9 +52,8 @@ public class PlayerController : BasicCharacter // INHERITANCE
     // POLYMORPHISM
     public override void Moving()
     {
-        Vector3 movement = forwardInput * speed * Time.deltaTime * Vector3.forward;
-
-        transform.Translate(movement);
+        
+        transform.Translate(GetMovementVector());
 
         transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
 
@@ -77,5 +76,12 @@ public class PlayerController : BasicCharacter // INHERITANCE
             isOnGround = true;
             animator.SetBool("isOnGround", true);
         }
+    }
+
+    // ABSTRACTION
+    private Vector3 GetMovementVector()
+    {
+        Vector3 movement = forwardInput * speed * Time.deltaTime * Vector3.forward;
+        return movement;
     }
 }
