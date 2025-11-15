@@ -7,6 +7,7 @@ TagManager:
   - floor
   - enemy
   - spell
+  - home
   layers:
   - Default
   - TransparentFX

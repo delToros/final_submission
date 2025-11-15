@@ -84,4 +84,17 @@ public class PlayerController : BasicCharacter // INHERITANCE
         Vector3 movement = forwardInput * speed * Time.deltaTime * Vector3.forward;
         return movement;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("enemy"))
+        {
+            GameManager.Instance.GameOver();
+        }
+
+        if (other.CompareTag("home"))
+        {
+            GameManager.Instance.WinGame();
+        }
+    }
 }
