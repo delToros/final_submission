@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - spell
   - home
+  - potion
   layers:
   - Default
   - TransparentFX
