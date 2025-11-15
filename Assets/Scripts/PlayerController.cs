@@ -14,6 +14,9 @@ public class PlayerController : BasicCharacter // INHERITANCE
     public float jumpForce = 8;
     public bool isOnGround = true;
 
+    // Spell
+    private int potionsCount = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -95,6 +98,11 @@ public class PlayerController : BasicCharacter // INHERITANCE
         if (other.CompareTag("home"))
         {
             GameManager.Instance.WinGame();
+        }
+
+        if (other.CompareTag("potion"))
+        {
+            potionsCount++;
         }
     }
 }

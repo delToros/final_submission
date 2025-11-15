@@ -12,7 +12,7 @@ public class Consumable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       transform.Rotate(0.0f, 50.0f * Time.deltaTime, 0.0f, Space.World);
+       transform.Rotate(0.0f, rotationSpeed * Time.deltaTime, 0.0f, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
