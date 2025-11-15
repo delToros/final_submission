@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class PlayerController : BasicCharacter // INHERITANCE
 
     // Spell
     private int potionsCount = 0;
+    public TextMeshProUGUI potionsText;
+    public TextMeshProUGUI spellText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -103,6 +106,13 @@ public class PlayerController : BasicCharacter // INHERITANCE
         if (other.CompareTag("potion"))
         {
             potionsCount++;
+            potionsText.text = $"Potions: {potionsCount}/3";
+            if (potionsCount == 3)
+            {
+                potionsText.color = Color.green;
+                spellText.gameObject.SetActive(true);
+            }
+            
         }
     }
 }
