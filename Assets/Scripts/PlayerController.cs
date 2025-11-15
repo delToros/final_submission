@@ -73,6 +73,11 @@ public class PlayerController : BasicCharacter // INHERITANCE
             animator.SetBool("isOnGround", false);
             animator.SetTrigger("Jump_trig");
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            animator.SetTrigger("Spell_trig");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
