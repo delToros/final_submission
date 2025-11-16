@@ -1,14 +1,18 @@
+using System.Collections;
 using TMPro;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerController : BasicCharacter // INHERITANCE
 {
-
+    // moving
     public float forwardInput;
     public float horizontalInput;
     public float turnSpeed;
+
+    // animations
     private Animator animator;
+    private bool isReady = false;
 
     // For jumping
     private Rigidbody rb;
@@ -19,6 +23,9 @@ public class PlayerController : BasicCharacter // INHERITANCE
     private int potionsCount = 0;
     public TextMeshProUGUI potionsText;
     public TextMeshProUGUI spellText;
+    public GameObject spell;
+    public float animationWait = 2.5f;
+    public ParticleSystem spellParticle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -30,10 +37,26 @@ public class PlayerController : BasicCharacter // INHERITANCE
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
+        // Set animations to deafaut state upon loading
+        ResetAnimationParrams();
+    }
+
+    private void Start()
+    {
+        isReady = true;
     }
 
     void FixedUpdate()
     {
+
+        // NEW CHECK: Don't process input until we're fully ready
+        if (!isReady)
+        {
+            // If not ready, ensure the animator is explicitly set to 0.
+            animator.SetFloat("f_speed", 0f);
+            return;
+        }
+
         forwardInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
@@ -50,7 +73,6 @@ public class PlayerController : BasicCharacter // INHERITANCE
 
         // 3. Set the Animator parameter
         animator.SetFloat("f_speed", currentSpeed);
-
 
 
     }
@@ -77,6 +99,8 @@ public class PlayerController : BasicCharacter // INHERITANCE
         if (Input.GetKeyDown(KeyCode.E))
         {
             animator.SetTrigger("Spell_trig");
+            StartCoroutine(SpellAfterDelay());
+            
         }
     }
 
@@ -96,6 +120,7 @@ public class PlayerController : BasicCharacter // INHERITANCE
         return movement;
     }
 
+    // ENCAPSULATION
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
@@ -119,5 +144,26 @@ public class PlayerController : BasicCharacter // INHERITANCE
             }
             
         }
+    }
+
+    // ABSTRACTION
+    private void ResetAnimationParrams()
+    {
+        animator.SetFloat("f_speed", 0);
+        animator.SetBool("isOnGround", true);
+    }
+
+    IEnumerator SpellAfterDelay()
+    {
+        yield return new WaitForSeconds(animationWait);
+        SpawnSpell();
+    }
+
+    // ABSTRACTION
+    private void SpawnSpell()
+    {
+        Vector3 spawnPos = new(transform.position.x, 1.141f, transform.position.z);
+        Instantiate(spell, spawnPos, transform.rotation);
+        spellParticle.Play();
     }
 }
